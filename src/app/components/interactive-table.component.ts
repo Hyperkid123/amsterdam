@@ -11,8 +11,6 @@ export class InteractiveTable implements OnChanges {
   constructor() {
   }
   ngOnChanges() {
-    console.log(this.dataSource.data, this.columns)
-
   }
 }
 

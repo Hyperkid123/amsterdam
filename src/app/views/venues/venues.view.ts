@@ -1,5 +1,5 @@
 import { Component, OnInit, OnChanges } from '@angular/core';
-import { getData } from '../../api-mock/api';
+import { getVenues, EstablishmentItem, SortOrder } from '../../api-mock/api';
 import { MatTableDataSource } from '@angular/material/table';
 
 interface VenueItem {
@@ -13,10 +13,19 @@ interface VenueItem {
 })
 export class Venues implements OnInit {
   venuesList =  new MatTableDataSource<VenueItem>([]);
-  columns: string[] = ['trcid', 'title']
+  columns: string[] = ['trcid', 'title', 'city']
   ngOnInit() {
-    getData().then(data => {
-      this.venuesList = new MatTableDataSource<VenueItem>(data.map(({ trcid, title }) => ({trcid, title})))
+    getVenues({sort: {
+      path: 'location.city',
+      order: SortOrder.asc
+    },filters: [{
+      filterPath: 'title',
+      filterValue: 'a'
+    }, {
+      filterPath: 'location.city',
+      filterValue: 'i'
+    }]}).then((data: Array<EstablishmentItem>) => {
+      this.venuesList = new MatTableDataSource<VenueItem>(data.map(({ trcid, title, location: {city} }) => ({trcid, title, city})))
     })
   }
 }
