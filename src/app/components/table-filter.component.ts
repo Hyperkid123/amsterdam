@@ -21,6 +21,7 @@ export interface TableFilter {
   label: string;
   filterValue?: filterValue;
   filterOptions?: filterOptions;
+  substring?: boolean;
 }
 
 export type TableFilters = Array<TableFilter>

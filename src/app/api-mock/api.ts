@@ -47,11 +47,18 @@ const filterComparator = (item: EstablishmentItem, path: string, value: FilterVa
     return value.some(value => filterComparator(item, path, value))
   }
 
+  const record = get(item, path);
+  if (record === undefined) {
+    return false;
+  }
+  if (path === 'dates.startdate') {
+    return record.split('-').pop() === value
+  }
   if (typeof value === 'string') {
-    return get(item, path).toLocaleLowerCase().includes(value.toLocaleLowerCase())
+    return record.toLocaleLowerCase().includes(value.toLocaleLowerCase())
   }
 
-  return get(item, path) === value
+  return record === value
 }
 
 const filterByRule = (dataset: Array<EstablishmentItem>, rule: FilterRule) => {
@@ -97,13 +104,21 @@ const createResponse = (data: Array<EstablishmentItem>, limit: number, offset: n
   count
 })
 
+const sanitizeFilters = (filters) => filters.filter(({ filterValue }) => {
+  if (Array.isArray(filterValue) || typeof filterValue === 'string') {
+    return filterValue.length > 0
+  }
+
+  return filterValue !== undefined
+})
+
 export const getVenues = ({
   limit = 25,
   offset = 0,
   filters = [],
   sort
 }: ApiFilter = {}): Promise<ApiCollectionResponse> => {
-  const fullFilter = filterBaseDataset(establishments, filters)
+  const fullFilter = filterBaseDataset(establishments, sanitizeFilters(filters))
   let result = [...fullFilter.slice(offset, offset + limit)]
   if (sort) {
     result = sortData(result, sort)

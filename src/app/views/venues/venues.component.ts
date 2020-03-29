@@ -14,14 +14,18 @@ interface VenueItem {
 export class VenuesComponent implements OnInit {
   venuesList: Array<VenueItem> = [];
   columns: Array<Column> = [
-    { path: 'trcid', label: 'Id', sortable: true },
-    { path: 'title', label: 'Title' },
-    { path: 'location.city', label: 'City', sortable: true }
+    { path: 'title', label: 'Name', sortable: true },
+    { path: 'location.city', label: 'City', sortable: true },
+    { path: 'location.zipcode', label: 'Postcode', sortable: true },
+    { path: 'location.adress', label: 'Adress', sortable: true },
+    { path: 'dates.startdate', label: 'Start year', sortable: true }
   ];
   isLoading = true;
   filters = [
-    { key: 'title', filterType: 'input', label: 'Title' },
-    { key: 'location.city', filterType: 'select', label: 'City', options: [{ value: 'amsterdam', label: 'Amsterdam' }, { value: 'AALSMEER', label: 'Aalsmeer' }] }
+    { key: 'title', filterType: 'input', label: 'name', substring: true },
+    { key: 'location.city', filterType: 'select', label: 'City', options: [{ value: 'amsterdam', label: 'Amsterdam' }, { value: 'AALSMEER', label: 'Aalsmeer' }] },
+    { key: 'dates.startdate', filterType: 'input', label: 'Start year' },
+    { key: 'location.zipcode', filterType: 'input', label: 'Postcode' },
   ];
   count = 0;
   limit = 25;
@@ -48,7 +52,16 @@ export class VenuesComponent implements OnInit {
       this.limit = limit;
       this.offset = offset;
       this.pageIndex = Math.ceil(offset / (limit + 1))
-      this.venuesList = data.map(({ trcid, title, location: { city } }) => ({ trcid, title, ['location.city']: city, link: `/venues/${trcid}` }))
+      this.venuesList = data.map(({ trcid, title, location: { city, zipcode, adress }, dates: { startdate } }) =>
+        ({
+          trcid,
+          title,
+          ['location.city']: city,
+          ['location.adress']: adress,
+          ['location.zipcode']: zipcode,
+          ['dates.startdate']: startdate && startdate.split('-').pop(),
+          link: `/venues/${trcid}`
+        }))
       this.isLoading = true
     })
   }

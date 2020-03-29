@@ -13,6 +13,6 @@ export class TableInputFilterComponent {
   @Output() filterChange = new EventEmitter();
 
   handleFilterChange(value) {
-    this.filterChange.emit({ ...this.filter, filterValue: value })
+    this.filterChange.emit({ ...this.filter, filterValue: this.filter.substring ? value : value.length > 0 ? value : undefined })
   }
 }
