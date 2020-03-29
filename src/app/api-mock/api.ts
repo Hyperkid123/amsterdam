@@ -125,3 +125,8 @@ export const getVenues = ({
   }
   return new Promise((res) => setTimeout(() => res(createResponse(result, limit, offset, fullFilter.length)), 250))
 };
+
+export const getVenue = (id: string) => {
+  const venue = establishments.find(({ trcid }) => trcid === id);
+  return new Promise((res, rej) => setTimeout(() => venue ? res(venue) : rej({ status: 404, message: `Venue with id ${id} was not found` }), 250));
+}
