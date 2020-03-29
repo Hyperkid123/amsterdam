@@ -2,15 +2,15 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
-  selector: 'venue',
-  templateUrl: './venue-detail.view.html',
+  selector: 'app-venue-detail',
+  templateUrl: './venue-detail.component.html',
 })
-export class Venue implements OnInit {
+export class VenueComponent implements OnInit {
   venueId;
 
   constructor(
     private route: ActivatedRoute
-  ){}
+  ) { }
 
   ngOnInit() {
     this.route.paramMap.subscribe(params => {

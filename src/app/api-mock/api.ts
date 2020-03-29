@@ -11,7 +11,7 @@ type FilterRule = {
 export enum SortOrder {
   asc,
   desc
-} 
+}
 
 export type Sort = {
   order?: SortOrder,
@@ -43,11 +43,11 @@ export type ApiCollectionResponse = {
 }
 
 const filterComparator = (item: EstablishmentItem, path: string, value: FilterValue) => {
-  if(Array.isArray(value)) {
+  if (Array.isArray(value)) {
     return value.some(value => filterComparator(item, path, value))
   }
 
-  if(typeof value === 'string') {
+  if (typeof value === 'string') {
     return get(item, path).toLocaleLowerCase().includes(value.toLocaleLowerCase())
   }
 
@@ -56,19 +56,19 @@ const filterComparator = (item: EstablishmentItem, path: string, value: FilterVa
 
 const filterByRule = (dataset: Array<EstablishmentItem>, rule: FilterRule) => {
   const { filterPath, filterValue } = rule;
-  return dataset.filter(item => filterComparator(item, filterPath, filterValue)) 
+  return dataset.filter(item => filterComparator(item, filterPath, filterValue))
 }
 
 const chainFilters = (dataset: Array<EstablishmentItem>, filters: Array<FilterRule> = []) => {
-  if(filters.length === 0) {
+  if (filters.length === 0) {
     return [...dataset]
   }
-  const [ filter ] = filters.splice(0, 1)
+  const [filter] = filters.splice(0, 1)
   return chainFilters(filterByRule(dataset, filter), [...filters])
 }
 
 const filterBaseDataset = (dataset: Array<EstablishmentItem>, filters: Array<FilterRule>) => {
-  if(filters.length === 0) {
+  if (filters.length === 0) {
     return dataset
   }
 
@@ -78,7 +78,7 @@ const filterBaseDataset = (dataset: Array<EstablishmentItem>, filters: Array<Fil
 const sortCompare = (first: EstablishmentItem, second: EstablishmentItem, path: string): number => {
   const firstValue = get(first, path);
   const secondValue = get(second, path);
-  if(typeof firstValue === 'string') {
+  if (typeof firstValue === 'string') {
     return firstValue.localeCompare(secondValue)
   }
 
@@ -105,7 +105,7 @@ export const getVenues = ({
 }: ApiFilter = {}): Promise<ApiCollectionResponse> => {
   const fullFilter = filterBaseDataset(establishments, filters)
   let result = [...fullFilter.slice(offset, offset + limit)]
-  if(sort) {
+  if (sort) {
     result = sortData(result, sort)
   }
   return new Promise((res) => setTimeout(() => res(createResponse(result, limit, offset, fullFilter.length)), 250))

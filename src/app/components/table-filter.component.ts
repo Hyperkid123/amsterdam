@@ -8,12 +8,12 @@ export enum filterTypes {
 
 export type filterValue = string | number | boolean | Array<string> | Array<number> | Array<boolean>
 
-export interface filterOption {
+export interface FilterOption {
   value: string | number | boolean;
   label: string;
 }
 
-export type filterOptions = Array<filterOption>
+export type filterOptions = Array<FilterOption>
 
 export interface TableFilter {
   key: string;
@@ -26,10 +26,10 @@ export interface TableFilter {
 export type TableFilters = Array<TableFilter>
 
 @Component({
-  selector: 'table-filter',
+  selector: 'app-table-filter',
   templateUrl: './table-filter.component.html',
 })
-export class TableFilter {
+export class TableFilterComponent {
   @Input() filters: TableFilters = []
   @Output() filterChange = new EventEmitter()
 

@@ -1,0 +1,11 @@
+<ul>
+  <li>
+    <a [routerLink]="['venues', '1']">
+      Link to venue with ID 1
+    </a>
+  </li>
+</ul>
+
+<app-interactive-table [filters]="filters" (paginationChange)="venuesPagination($event)" [length]="count"
+  [isLoading]="isLoading" [columns]="columns" [data]="venuesList" [pageIndex]="pageIndex" [sort]="sort">
+</app-interactive-table>

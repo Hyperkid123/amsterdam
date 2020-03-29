@@ -1,22 +1,16 @@
 <div class="mat-elevation-z8">
-  <table-filter (filterChange)="filterChange($event)" [filters]="filters"></table-filter>
-  <mat-paginator 
-    (page)="pageEvent = handlePagination($event)"
-    [length]="length"
-    [pageIndex]="pageIndex"
-    [pageSize]="pageSize"
-    [pageSizeOptions]="pageSizeOptions"
-    [showFirstLastButtons]="showFirstLastButtons"
-  >
+  <app-table-filter (filterChange)="filterChange($event)" [filters]="filters"></app-table-filter>
+  <mat-paginator (page)="pageEvent = handlePagination($event)" [length]="length" [pageIndex]="pageIndex"
+    [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions" [showFirstLastButtons]="showFirstLastButtons">
   </mat-paginator>
   <table mat-table [dataSource]="dataSource" class="mat-sort">
     <ng-container *ngFor="let column of columns" [matColumnDef]="column.path">
       <th mat-header-cell *matHeaderCellDef>
         <button (click)="handleSort(column)">
           {{column.label}}
-           <mat-icon>arrow_upward</mat-icon> 
+          <mat-icon>arrow_upward</mat-icon>
         </button>
-       </th>
+      </th>
       <td mat-cell *matCellDef="let element"> {{element[column.path]}} </td>
     </ng-container>
     <tr mat-header-row *matHeaderRowDef="columnsDefinition"></tr>

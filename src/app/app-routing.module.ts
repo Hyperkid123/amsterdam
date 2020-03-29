@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { Venues } from './views/venues/venues.view';
-import { Venue } from './views/venue-detail/venue-detail.view';
+import { VenuesComponent } from './views/venues/venues.component';
+import { VenueComponent } from './views/venue-detail/venue-detail.component';
 
 
 const routes: Routes = [
-  {path: '', component: Venues},
-  {path: 'venues/:venueId', component: Venue}
+  { path: '', component: VenuesComponent },
+  { path: 'venues/:venueId', component: VenueComponent }
 ];
 
 @NgModule({

@@ -4,20 +4,20 @@ import { FormControl } from '@angular/forms';
 
 
 @Component({
-  selector: 'table-select-filter',
+  selector: 'app-table-select-filter',
   templateUrl: './table-select-filter.component.html',
 })
-export class TableSelectFilter implements OnInit {
+export class TableSelectFilterComponent implements OnInit {
   @Input() filter: TableFilter;
   @Input() index: number;
   @Input() options = []
 
-  @Output() filterChange = new EventEmitter();  
+  @Output() filterChange = new EventEmitter();
   filterControl = new FormControl();
-  
+
   ngOnInit() {
     this.filterControl.setValue(this.filter.filterValue || [])
-    this.filterControl.valueChanges.subscribe(value => {  
+    this.filterControl.valueChanges.subscribe(value => {
       this.filter.filterValue = value.length > 0 ? value : undefined;
       this.filterChange.emit(this.filter)
     })

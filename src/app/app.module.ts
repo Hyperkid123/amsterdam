@@ -11,22 +11,22 @@ import { MatInputModule } from '@angular/material/input'
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { Venues } from './views/venues/venues.view';
-import { Venue } from './views/venue-detail/venue-detail.view';
-import { InteractiveTable } from './components/interactive-table.component';
-import { TableFilter } from './components/table-filter.component';
-import { TableInputFilter } from './components/table-input-filter.component';
-import { TableSelectFilter } from './components/table-select-filter.component';
+import { VenuesComponent } from './views/venues/venues.component';
+import { VenueComponent } from './views/venue-detail/venue-detail.component';
+import { InteractiveTableComponent } from './components/interactive-table.component';
+import { TableFilterComponent } from './components/table-filter.component';
+import { TableInputFilterComponent } from './components/table-input-filter.component';
+import { TableSelectFilterComponent } from './components/table-select-filter.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    Venues,
-    Venue,
-    InteractiveTable,
-    TableFilter,
-    TableInputFilter,
-    TableSelectFilter,
+    VenuesComponent,
+    VenueComponent,
+    InteractiveTableComponent,
+    TableFilterComponent,
+    TableInputFilterComponent,
+    TableSelectFilterComponent,
   ],
   imports: [
     BrowserModule,
