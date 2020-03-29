@@ -36,7 +36,7 @@ export class TableFilter {
   handleFilter(event) {
     this.filterChange.emit(this.filters.map(filter => filter.key === event.key ? ({
       ...filter,
-      ...event,
+      ...event
     }) : filter))
   }
 }

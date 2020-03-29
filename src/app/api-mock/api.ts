@@ -35,6 +35,13 @@ export type EstablishmentItem = {
   location: EstablishmentLocation;
 }
 
+export type ApiCollectionResponse = {
+  count: number;
+  limit: number;
+  offset: number;
+  data: Array<any>
+}
+
 const filterComparator = (item: EstablishmentItem, path: string, value: FilterValue) => {
   if(Array.isArray(value)) {
     return value.some(value => filterComparator(item, path, value))
@@ -83,17 +90,23 @@ const sortData = (dataset: Array<EstablishmentItem>, { path, order }: Sort) => {
   return dataset.sort((first, second) => sortCompare(first, second, path) * sortOrder)
 }
 
+const createResponse = (data: Array<EstablishmentItem>, limit: number, offset: number, count: number): ApiCollectionResponse => ({
+  data,
+  limit,
+  offset,
+  count
+})
 
 export const getVenues = ({
   limit = 25,
   offset = 0,
   filters = [],
   sort
-}: ApiFilter = {}): Promise<Array<EstablishmentItem>> => {
-  let result = [...filterBaseDataset(establishments, filters).slice(offset, offset + limit)]
+}: ApiFilter = {}): Promise<ApiCollectionResponse> => {
+  const fullFilter = filterBaseDataset(establishments, filters)
+  let result = [...fullFilter.slice(offset, offset + limit)]
   if(sort) {
     result = sortData(result, sort)
   }
-  
-  return new Promise((res) => setTimeout(() => res(result), 250))
+  return new Promise((res) => setTimeout(() => res(createResponse(result, limit, offset, fullFilter.length)), 250))
 };

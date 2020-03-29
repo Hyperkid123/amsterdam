@@ -23,6 +23,7 @@ export class InteractiveTable {
   pageEvent: PageEvent;
 
   filterChange(filters) {
+    this.pageIndex = 0
     this.paginationChange.emit({pagination: {
       pageIndex: this.pageIndex,
       pageSize: this.pageSize,

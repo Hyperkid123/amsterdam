@@ -1,4 +1,4 @@
-<h1>There will be venues</h1>
+<h1>Prdel</h1>
 
 <ul>
   <li>
@@ -8,4 +8,12 @@
   </li>
 </ul>
 
-<interactive-table [columns]="columns" [dataSource]="venuesList"></interactive-table>
+<interactive-table
+  [filters]="filters"
+  (paginationChange)="venuesPagination($event)"
+  [length]="count"
+  [isLoading]="isLoading"
+  [columns]="columns"
+  [dataSource]="venuesList"
+  [pageIndex]="pageIndex"
+></interactive-table>
