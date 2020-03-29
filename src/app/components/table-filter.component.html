@@ -1,4 +1,4 @@
-<ul>
+<ul class="table-filter">
   <li *ngFor="let filter of filters; let i = index">
     <div [ngSwitch]="filter.filterType">
       <app-table-input-filter *ngSwitchCase="'input'" [index]="i" (filterChange)="handleFilter($event)"

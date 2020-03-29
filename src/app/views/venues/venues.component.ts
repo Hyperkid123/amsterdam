@@ -13,7 +13,11 @@ interface VenueItem {
 })
 export class VenuesComponent implements OnInit {
   venuesList: Array<VenueItem> = [];
-  columns: Array<Column> = [{ path: 'trcid', label: 'Id' }, { path: 'title', label: 'Title' }, { path: 'location.city', label: 'City' }];
+  columns: Array<Column> = [
+    { path: 'trcid', label: 'Id', sortable: true },
+    { path: 'title', label: 'Title' },
+    { path: 'location.city', label: 'City', sortable: true }
+  ];
   isLoading = true;
   filters = [
     { key: 'title', filterType: 'input', label: 'Title' },

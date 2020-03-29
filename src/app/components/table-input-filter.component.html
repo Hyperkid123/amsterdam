@@ -1,4 +1,3 @@
-<h1>Table input filter</h1>
 <mat-form-field>
   <mat-label>Filter by {{filter.label}}</mat-label>
   <input matInput type="text" [value]="filter.filterValue || ''" (change)="handleFilterChange($event.target.value)">

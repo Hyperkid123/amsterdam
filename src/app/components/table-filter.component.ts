@@ -28,6 +28,7 @@ export type TableFilters = Array<TableFilter>
 @Component({
   selector: 'app-table-filter',
   templateUrl: './table-filter.component.html',
+  styleUrls: ['./table-filter.component.scss']
 })
 export class TableFilterComponent {
   @Input() filters: TableFilters = []

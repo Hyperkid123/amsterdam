@@ -1,19 +1,27 @@
-<div class="mat-elevation-z8">
-  <app-table-filter (filterChange)="filterChange($event)" [filters]="filters"></app-table-filter>
-  <mat-paginator (page)="pageEvent = handlePagination($event)" [length]="length" [pageIndex]="pageIndex"
-    [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions" [showFirstLastButtons]="showFirstLastButtons">
-  </mat-paginator>
+<div class="mat-elevation-z8 interactive-table">
+  <div class="table-controls">
+    <app-table-filter (filterChange)="filterChange($event)" [filters]="filters"></app-table-filter>
+    <mat-paginator class="table-pagination" (page)="pageEvent = handlePagination($event)" [length]="length"
+      [pageIndex]="pageIndex" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions"
+      [showFirstLastButtons]="showFirstLastButtons">
+    </mat-paginator>
+  </div>
   <table mat-table [dataSource]="dataSource" class="mat-sort">
     <ng-container *ngFor="let column of columns" [matColumnDef]="column.path">
-      <th mat-header-cell *matHeaderCellDef>
-        <button (click)="handleSort(column)">
+      <th mat-header-cell *matHeaderCellDef class="table-header">
+        <button *ngIf="column.sortable" class="sortable-button" (click)="handleSort(column)">
           {{column.label}}
-          <mat-icon>arrow_upward</mat-icon>
+          <mat-icon class="sortable-icon" [class.desc]="sort.order === 1"
+            [class.active]="sort.order >= 0 && column.path === sort.path">
+            arrow_upward</mat-icon>
         </button>
+        <span *ngIf="!column.sortable">
+          {{column.label}}
+        </span>
       </th>
       <td mat-cell *matCellDef="let element"> {{element[column.path]}} </td>
     </ng-container>
     <tr mat-header-row *matHeaderRowDef="columnsDefinition"></tr>
-    <tr [routerLink]="row.link" mat-row *matRowDef="let row; columns: columnsDefinition;"></tr>
+    <tr [routerLink]="row.link" class="clickable-row" mat-row *matRowDef="let row; columns: columnsDefinition;"></tr>
   </table>
 </div>

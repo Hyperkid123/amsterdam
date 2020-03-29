@@ -7,10 +7,12 @@ import { Sort, SortOrder } from '../api-mock/api';
 export type Column = {
   path: string;
   label: string;
+  sortable?: boolean;
 }
 @Component({
   selector: 'app-interactive-table',
   templateUrl: './interactive-table.component.html',
+  styleUrls: ['./interactive-table.component.scss']
 })
 export class InteractiveTableComponent implements OnInit, OnChanges {
   @Input() data = [];
@@ -45,11 +47,15 @@ export class InteractiveTableComponent implements OnInit, OnChanges {
 
   handleSort({ path }) {
     let order = SortOrder.asc;
-    if (this.sort.order === 0) {
-      order = SortOrder.desc
-    }
-    if (this.sort.order === 1) {
-      order = undefined
+    if (path === this.sort.path) {
+      if (this.sort.order === 0) {
+        order = SortOrder.desc
+      }
+      if (this.sort.order === 1) {
+        order = undefined
+      }
+    } else {
+      order = 0
     }
     this.pageIndex = 0;
     this.paginationChange.emit({
