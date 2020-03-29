@@ -1,7 +1,8 @@
 import { Component, OnInit, OnChanges } from '@angular/core';
-import { getVenues, EstablishmentItem, SortOrder } from '../../api-mock/api';
+import { getVenues, EstablishmentItem, SortOrder, Sort } from '../../api-mock/api';
 import { MatTableDataSource } from '@angular/material/table';
 import { PageEvent } from '@angular/material/paginator';
+import { Column } from 'src/app/components/interactive-table.component';
 
 interface VenueItem {
   trcid: string;
@@ -13,8 +14,8 @@ interface VenueItem {
   templateUrl: './venues.view.html',
 })
 export class Venues implements OnInit {
-  venuesList =  new MatTableDataSource<VenueItem>([]);
-  columns: string[] = ['trcid', 'title', 'city'];
+  venuesList: Array<VenueItem> = [];
+  columns: Array<Column> = [{path: 'trcid', label: 'Id'}, {path: 'title', label: 'Title'}, {path: 'location.city', label: 'City'}];
   isLoading: boolean = true;
   filters = [
     {key: 'title', filterType: 'input', label: 'Title'},
@@ -24,25 +25,34 @@ export class Venues implements OnInit {
   limit: number = 25;
   offset: number = 0;
   pageIndex: number = 1;
+  sort: Sort = {
+    path: 'trcid',
+    order: SortOrder.asc
+  };
 
   ngOnInit() {
     this.isLoading = true;
-    getVenues().then(({data, count, limit, offset}) => {
+    getVenues({sort: {
+      path: this.sort.path,
+      
+    }}).then(({data, count, limit, offset}) => {
       this.count = count;
       this.limit = limit;
       this.offset = offset;
       this.pageIndex = Math.ceil(offset / (limit + 1))
-      this.venuesList = new MatTableDataSource<VenueItem>(data.map(({ trcid, title, location: {city} }) => ({trcid, title, city})))
+      this.venuesList = data.map(({ trcid, title, location: {city} }) => ({trcid, title, ['location.city']: city}))
       this.isLoading = true
     })
   }
 
-  venuesPagination({pagination, filters}): PageEvent {
+  venuesPagination({pagination, filters, sort}): PageEvent {
     this.filters = filters;
     this.isLoading = true;
+    this.sort = sort;
     getVenues({
       limit: pagination.pageSize,
       offset: pagination.pageSize * pagination.pageIndex,
+      sort,
       filters: filters.map(({ key, filterValue }) => ({
         filterPath: key,
         filterValue: filterValue || ''
@@ -52,7 +62,7 @@ export class Venues implements OnInit {
       this.limit = limit;
       this.offset = offset;
       this.pageIndex = Math.ceil(offset / (limit + 1))
-      this.venuesList = new MatTableDataSource<VenueItem>(data.map(({ trcid, title, location: {city} }) => ({trcid, title, city})))
+      this.venuesList = data.map(({ trcid, title, location: {city} }) => ({trcid, title, ['location.city']: city}))
       this.isLoading = true
     })
     return pagination;

@@ -1,5 +1,3 @@
-<h1>Prdel</h1>
-
 <ul>
   <li>
     <a [routerLink]="['venues', '1']">
@@ -14,6 +12,7 @@
   [length]="count"
   [isLoading]="isLoading"
   [columns]="columns"
-  [dataSource]="venuesList"
+  [data]="venuesList"
   [pageIndex]="pageIndex"
+  [sort]="sort"
 ></interactive-table>

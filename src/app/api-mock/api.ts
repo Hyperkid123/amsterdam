@@ -13,7 +13,7 @@ export enum SortOrder {
   desc
 } 
 
-type Sort = {
+export type Sort = {
   order?: SortOrder,
   path: string
 }
