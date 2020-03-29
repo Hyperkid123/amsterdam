@@ -1,0 +1,8 @@
+<h1>Table input filter</h1>
+<mat-form-field>
+  <mat-label>Filter by {{filter.label}}</mat-label>
+  <input matInput type="text" [value]="filter.filterValue || ''" (change)="handleFilterChange($event.target.value)">
+  <button mat-button *ngIf="filter.filterValue || ''" matSuffix mat-icon-button aria-label="Clear" (click)="handleFilterChange('')">
+    <mat-icon>close</mat-icon>
+  </button>
+</mat-form-field>

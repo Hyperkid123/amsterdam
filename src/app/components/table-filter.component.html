@@ -1,0 +1,14 @@
+<ul>
+  <li *ngFor="let filter of filters; let i = index">
+    <div [ngSwitch]="filter.filterType">
+      <table-input-filter *ngSwitchCase="'input'" [index]="i" (filterChange)="handleFilter($event)" [filter]="filter"></table-input-filter>
+      <table-select-filter
+        *ngSwitchCase="'select'"
+        [index]="i"
+        (filterChange)="handleFilter($event)"
+        [filter]="filter"
+        [options]="filter.options">
+      </table-select-filter>    
+    </div>
+  </li>
+</ul>
