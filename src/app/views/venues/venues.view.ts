@@ -40,7 +40,7 @@ export class Venues implements OnInit {
       this.limit = limit;
       this.offset = offset;
       this.pageIndex = Math.ceil(offset / (limit + 1))
-      this.venuesList = data.map(({ trcid, title, location: {city} }) => ({trcid, title, ['location.city']: city}))
+      this.venuesList = data.map(({ trcid, title, location: {city} }) => ({trcid, title, ['location.city']: city, link: `/venues/${trcid}`}))
       this.isLoading = true
     })
   }
@@ -62,7 +62,7 @@ export class Venues implements OnInit {
       this.limit = limit;
       this.offset = offset;
       this.pageIndex = Math.ceil(offset / (limit + 1))
-      this.venuesList = data.map(({ trcid, title, location: {city} }) => ({trcid, title, ['location.city']: city}))
+      this.venuesList = data.map(({ trcid, title, location: {city} }) => ({trcid, title, ['location.city']: city, link: `/venues/${trcid}`}))
       this.isLoading = true
     })
     return pagination;
