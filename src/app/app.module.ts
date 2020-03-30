@@ -8,6 +8,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatSelectModule } from '@angular/material/select';
 import { MatIconModule } from '@angular/material/icon'
 import { MatInputModule } from '@angular/material/input'
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -17,6 +18,7 @@ import { InteractiveTableComponent } from './components/interactive-table.compon
 import { TableFilterComponent } from './components/table-filter.component';
 import { TableInputFilterComponent } from './components/table-input-filter.component';
 import { TableSelectFilterComponent } from './components/table-select-filter.component';
+import { VenueMapComponent } from './components/venue-map.component';
 
 @NgModule({
   declarations: [
@@ -27,6 +29,7 @@ import { TableSelectFilterComponent } from './components/table-select-filter.com
     TableFilterComponent,
     TableInputFilterComponent,
     TableSelectFilterComponent,
+    VenueMapComponent
   ],
   imports: [
     BrowserModule,
@@ -39,7 +42,8 @@ import { TableSelectFilterComponent } from './components/table-select-filter.com
     FormsModule,
     ReactiveFormsModule,
     MatIconModule,
-    MatInputModule
+    MatInputModule,
+    FontAwesomeModule
   ],
   providers: [],
   bootstrap: [AppComponent]

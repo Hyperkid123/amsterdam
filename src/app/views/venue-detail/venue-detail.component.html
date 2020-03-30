@@ -1,3 +1,21 @@
-<h1>
-  Detail of venue with id: {{ venueId }}
-</h1>
+<div *ngIf="!isLoading">
+  <section class="mat-typography">
+    <h1>{{venue.title}}</h1>
+    <div>
+      <a *ngFor="let link of links" target="_blank" [href]="link.url">
+        <fa-icon [icon]="link.icon"></fa-icon>
+      </a>
+    </div>
+    <small>
+      {{venue.location.adress}} {{venue.location.zipcode}} {{venue.location.city}}
+    </small>
+    <p>
+      {{venue.details.en.shortdescription}}
+    </p>
+    <div [innerHTML]="venue.details.en.longdescription"></div>
+  </section>
+  <app-venue-map [longitude]="venue.location.longitude" [latitude]="venue.location.latitude"></app-venue-map>
+  <div>
+    <img *ngFor="let image of images" [src]="image.url"/>
+  </div>
+</div>
