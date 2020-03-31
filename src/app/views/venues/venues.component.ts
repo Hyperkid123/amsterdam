@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { getVenues, SortOrder, Sort } from '../../api-mock/api';
+import { getVenues, SortOrder, Sort, getVenuesMapData } from '../../api-mock/api';
 import { Column } from 'src/app/components/interactive-table.component';
 
 interface VenueItem {
@@ -34,6 +34,13 @@ export class VenuesComponent implements OnInit {
   sort: Sort = {
     path: 'trcid',
     order: SortOrder.asc
+  };
+  locations: any = [];
+
+  handleGetLocations = () => {
+    getVenuesMapData().then(data => {
+      this.locations = data;
+    })
   };
 
   handleVenuesRequest = ({ pagination, sort, filters = [] }) => {

@@ -6,7 +6,18 @@
       [showFirstLastButtons]="showFirstLastButtons">
     </mat-paginator>
   </div>
-  <table mat-table [dataSource]="dataSource" class="mat-sort">
+  <div class="view-switcher">
+    <mat-button-toggle-group #mode="matButtonToggleGroup" value="table">
+      <mat-button-toggle value="table">
+        <mat-icon>table_chart</mat-icon>
+      </mat-button-toggle>
+      <mat-button-toggle value="map">
+        <mat-icon>map</mat-icon>
+      </mat-button-toggle>
+    </mat-button-toggle-group>
+    <div class="example-selected-value">Selected value: {{mode.value}}</div>
+  </div>
+  <table *ngIf="mode.value === 'table'" mat-table [dataSource]="dataSource" class="mat-sort">
     <ng-container *ngFor="let column of columns" [matColumnDef]="column.path">
       <th mat-header-cell *matHeaderCellDef class="table-header">
         <button *ngIf="column.sortable" class="sortable-button" (click)="handleSort(column)">
@@ -24,4 +35,5 @@
     <tr mat-header-row *matHeaderRowDef="columnsDefinition"></tr>
     <tr [routerLink]="row.link" class="clickable-row" mat-row *matRowDef="let row; columns: columnsDefinition;"></tr>
   </table>
+  <app-establishments-map *ngIf="mode.value === 'map'" (getLocations)="handleGetLocations()" [locations]="locations"></app-establishments-map>
 </div>

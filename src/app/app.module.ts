@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -19,6 +20,7 @@ import { TableFilterComponent } from './components/table-filter.component';
 import { TableInputFilterComponent } from './components/table-input-filter.component';
 import { TableSelectFilterComponent } from './components/table-select-filter.component';
 import { VenueMapComponent } from './components/venue-map.component';
+import { EstablishmentsMapComponent } from './components/establishments-map.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +31,8 @@ import { VenueMapComponent } from './components/venue-map.component';
     TableFilterComponent,
     TableInputFilterComponent,
     TableSelectFilterComponent,
-    VenueMapComponent
+    VenueMapComponent,
+    EstablishmentsMapComponent
   ],
   imports: [
     BrowserModule,
@@ -43,7 +46,8 @@ import { VenueMapComponent } from './components/venue-map.component';
     ReactiveFormsModule,
     MatIconModule,
     MatInputModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+    MatButtonToggleModule
   ],
   providers: [],
   bootstrap: [AppComponent]

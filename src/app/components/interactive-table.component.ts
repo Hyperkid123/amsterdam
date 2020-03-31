@@ -25,12 +25,14 @@ export class InteractiveTableComponent implements OnInit, OnChanges {
   @Input() showFirstLastButtons = true;
   @Input() filters = []
   @Input() sort: Sort;
+  @Input() locations = [];
 
   @Output() paginationChange = new EventEmitter();
+  @Output() getLocations = new EventEmitter();
 
   pageEvent: PageEvent;
   dataSource: MatTableDataSource<any>;
-  columnsDefinition: string[]
+  columnsDefinition: string[];
 
   createDataSource() {
     this.dataSource = new MatTableDataSource(this.data)
@@ -43,6 +45,10 @@ export class InteractiveTableComponent implements OnInit, OnChanges {
 
   ngOnChanges() {
     this.createDataSource()
+  }
+
+  handleGetLocations() {
+    this.getLocations.emit()
   }
 
   handleSort({ path }) {
