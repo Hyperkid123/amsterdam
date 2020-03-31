@@ -7,7 +7,7 @@ import TileLayer from 'ol/layer/Tile';
 import VectorLayer from 'ol/layer/Vector';
 import {OSM} from 'ol/source';
 import Point from 'ol/geom/Point';
-import {Circle as CircleStyle, Fill, Style} from 'ol/style';
+import {Circle as CircleStyle, Fill, Style, Icon} from 'ol/style';
 import Feature from 'ol/Feature';
 import VectorSource from 'ol/source/Vector';
 import {defaults as defaultControls, ZoomToExtent} from 'ol/control';
@@ -27,16 +27,13 @@ export class VenueMapComponent implements OnInit {
   lonLat: any;
   ngOnInit() {
     this.lonLat = fromLonLat([Number(this.longitude.replace(',', '.')), Number(this.latitude.replace(',', '.'))])
-    console.log(this.lonLat)
     const marker = new Feature({
       geometry: new Point(this.lonLat)
     });
     marker.setStyle(new Style({
-      image: new CircleStyle({
-        radius: 8,
-        fill: new Fill({
-          color: 'orange'
-        })
+      image: new Icon({
+        src: 'assets/blue-map-marker.svg',
+        scale: 0.1,
       })
     }));
     this.vectorSource = new VectorSource({
