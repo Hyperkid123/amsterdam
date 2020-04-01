@@ -131,4 +131,3 @@ export const getVenue = (id: string) => {
   return new Promise((res, rej) => setTimeout(() => venue ? res(venue) : rej({ status: 404, message: `Venue with id ${id} was not found` }), 250));
 }
 
-export const getVenuesMapData = () => new Promise((res) => setTimeout(() => res(establishments), 250));

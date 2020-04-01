@@ -8,10 +8,10 @@
   </div>
   <div class="view-switcher">
     <mat-button-toggle-group #mode="matButtonToggleGroup" value="table">
-      <mat-button-toggle value="table">
+      <mat-button-toggle (click)="handleModeSwap('table')" value="table">
         <mat-icon>table_chart</mat-icon>
       </mat-button-toggle>
-      <mat-button-toggle value="map">
+      <mat-button-toggle (click)="handleModeSwap('map')" value="map">
         <mat-icon>map</mat-icon>
       </mat-button-toggle>
     </mat-button-toggle-group>
@@ -35,5 +35,5 @@
     <tr mat-header-row *matHeaderRowDef="columnsDefinition"></tr>
     <tr [routerLink]="row.link" class="clickable-row" mat-row *matRowDef="let row; columns: columnsDefinition;"></tr>
   </table>
-  <app-establishments-map *ngIf="mode.value === 'map'" (getLocations)="handleGetLocations()" [locations]="locations"></app-establishments-map>
+  <app-establishments-map *ngIf="mode.value === 'map'" [locations]="locations"></app-establishments-map>
 </div>

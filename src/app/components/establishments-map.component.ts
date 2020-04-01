@@ -26,40 +26,33 @@ export class EstablishmentsMapComponent implements OnInit, OnChanges {
   vectorSource: any;
   lonLat: any;
 
+  renderMarkers() {
+    this.vectorSource.clear();
+    const markers = this.locations.map(({location}) => {
+      const marker = new Feature({
+        geometry: new Point(fromLonLat([Number(location.longitude.replace(',', '.')), Number(location.latitude.replace(',', '.'))]))
+      })
+      marker.setStyle(new Style({
+        image: new Icon({
+          src: 'assets/blue-map-marker.svg',
+          scale: 0.1
+        })
+      }));
+      return marker;
+    });
+    this.vectorSource.addFeatures(markers)
+
+  }
+
   ngOnChanges() {
     if (this.vectorSource) {
-      this.vectorSource.clear();
-      const markers = this.locations.map(({location}) => {
-        const marker = new Feature({
-          geometry: new Point(fromLonLat([Number(location.longitude.replace(',', '.')), Number(location.latitude.replace(',', '.'))]))
-        })
-        marker.setStyle(new Style({
-          image: new Icon({
-            src: 'assets/blue-map-marker.svg',
-            scale: 0.1
-          })
-        }));
-        return marker;
-      });
-      console.log('markers', markers)
-      this.vectorSource.addFeatures(markers)
+      this.renderMarkers()
     }
-    console.log(this.locations)
   }
   ngOnInit() {
-    this.getLocations.emit()
     this.lonLat = fromLonLat([5.27972222, 52.21222222])
-    const marker = new Feature({
-      geometry: new Point(this.lonLat)
-    });
-    marker.setStyle(new Style({
-      image: new Icon({
-        src: 'assets/blue-map-marker.svg',
-        scale: 0.1,
-      })
-    }));
     this.vectorSource = new VectorSource({
-      features: [marker]
+      features: []
     });
     const vectorLayer = new VectorLayer({
       source: this.vectorSource
@@ -80,5 +73,6 @@ export class EstablishmentsMapComponent implements OnInit, OnChanges {
       layers,
       view: this.view,
     })
+    this.renderMarkers()
   }
 }

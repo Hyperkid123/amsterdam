@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { getVenues, SortOrder, Sort, getVenuesMapData } from '../../api-mock/api';
+import { getVenues, SortOrder, Sort } from '../../api-mock/api';
 import { Column } from 'src/app/components/interactive-table.component';
 
 interface VenueItem {
@@ -37,12 +37,6 @@ export class VenuesComponent implements OnInit {
   };
   locations: any = [];
 
-  handleGetLocations = () => {
-    getVenuesMapData().then(data => {
-      this.locations = data;
-    })
-  };
-
   handleVenuesRequest = ({ pagination, sort, filters = [] }) => {
     this.isLoading = true;
     getVenues({
@@ -59,7 +53,7 @@ export class VenuesComponent implements OnInit {
       this.limit = limit;
       this.offset = offset;
       this.pageIndex = Math.ceil(offset / (limit + 1))
-      this.venuesList = data.map(({ trcid, title, location: { city, zipcode, adress }, dates: { startdate } }) =>
+      this.venuesList = data.map(({ trcid, title, location: { city, zipcode, adress, ...location }, dates: { startdate } }) =>
         ({
           trcid,
           title,
@@ -67,7 +61,8 @@ export class VenuesComponent implements OnInit {
           ['location.adress']: adress,
           ['location.zipcode']: zipcode,
           ['dates.startdate']: startdate && startdate.split('-').pop(),
-          link: `/venues/${trcid}`
+          link: `/venues/${trcid}`,
+          location
         }))
       this.isLoading = true
     })

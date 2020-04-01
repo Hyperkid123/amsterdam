@@ -28,7 +28,6 @@ export class InteractiveTableComponent implements OnInit, OnChanges {
   @Input() locations = [];
 
   @Output() paginationChange = new EventEmitter();
-  @Output() getLocations = new EventEmitter();
 
   pageEvent: PageEvent;
   dataSource: MatTableDataSource<any>;
@@ -43,12 +42,20 @@ export class InteractiveTableComponent implements OnInit, OnChanges {
     this.createDataSource()
   }
 
-  ngOnChanges() {
-    this.createDataSource()
+  handleModeSwap(mode) {
+    this.paginationChange.emit({
+      filters: this.filters,
+      sort: this.sort,
+      pagination: {
+        pageIndex: mode === 'map' ? 0 : this.pageIndex,
+        pageSize: mode === 'map' ? this.length : this.pageSize,
+        length: this.length
+      },
+    })
   }
 
-  handleGetLocations() {
-    this.getLocations.emit()
+  ngOnChanges() {
+    this.createDataSource()
   }
 
   handleSort({ path }) {
