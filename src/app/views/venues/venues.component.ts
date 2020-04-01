@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { getVenues, SortOrder, Sort } from '../../api-mock/api';
+import { getVenues, getCities, SortOrder, Sort } from '../../api-mock/api';
 import { Column } from 'src/app/components/interactive-table.component';
 
 interface VenueItem {
@@ -75,6 +75,13 @@ export class VenuesComponent implements OnInit {
         pageIndex: 1
       }, sort: this.sort, filters: []
     })
+    getCities().then((cities) => {
+      this.filters = this.filters.map(
+        (filter: any) => filter.key === 'location.city'
+        ? ({...filter, options: cities.map(city => ({value: city, label: city}))})
+        : filter
+      ) 
+    });
   }
 
   venuesPagination({ pagination, filters, sort }) {

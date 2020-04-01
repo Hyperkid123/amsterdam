@@ -131,3 +131,7 @@ export const getVenue = (id: string) => {
   return new Promise((res, rej) => setTimeout(() => venue ? res(venue) : rej({ status: 404, message: `Venue with id ${id} was not found` }), 250));
 }
 
+export const getCities = (): Promise<Array<string>> => {
+  const cities = Array.from(new Set(establishments.map(({location: {city}}) => city)));
+  return new Promise((res) => res(cities));
+}
