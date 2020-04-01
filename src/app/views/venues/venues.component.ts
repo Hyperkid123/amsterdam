@@ -53,7 +53,7 @@ export class VenuesComponent implements OnInit {
       this.limit = limit;
       this.offset = offset;
       this.pageIndex = Math.ceil(offset / (limit + 1))
-      this.venuesList = data.map(({ trcid, title, location: { city, zipcode, adress, ...location }, dates: { startdate } }) =>
+      this.venuesList = data.map(({ trcid, title, location: { city, zipcode, adress, ...location }, dates: { startdate }, details: {en: {shortdescription}} }) =>
         ({
           trcid,
           title,
@@ -62,7 +62,8 @@ export class VenuesComponent implements OnInit {
           ['location.zipcode']: zipcode,
           ['dates.startdate']: startdate && startdate.split('-').pop(),
           link: `/venues/${trcid}`,
-          location
+          location,
+          shortdescription
         }))
       this.isLoading = true
     })
