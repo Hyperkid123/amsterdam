@@ -1,21 +1,33 @@
 <div *ngIf="!isLoading">
   <section class="mat-typography">
-    <h1>{{venue.title}}</h1>
-    <div>
-      <a *ngFor="let link of links" target="_blank" [href]="link.url">
-        <fa-icon [icon]="link.icon"></fa-icon>
-      </a>
+    <div class="venue-main-data">
+      <div class="venue-header">
+        <div class="venue-title">
+          <h1>{{venue.title}}</h1>
+          <div>
+            <a *ngFor="let link of links" target="_blank" [href]="link.url" class="media-link">
+              <fa-icon [icon]="link.icon"></fa-icon>
+            </a>
+          </div>
+        </div>
+        <small>
+          {{venue.location.adress}} {{venue.location.zipcode}} {{venue.location.city}}
+        </small>
+
+      </div>
+      <div class="venue-details">
+        <p class="venue-short-description">
+          {{venue.details.en.shortdescription}}
+        </p>
+  
+        <div [innerHTML]="venue.details.en.longdescription"></div>
+      </div>
     </div>
-    <small>
-      {{venue.location.adress}} {{venue.location.zipcode}} {{venue.location.city}}
-    </small>
-    <p>
-      {{venue.details.en.shortdescription}}
-    </p>
-    <div [innerHTML]="venue.details.en.longdescription"></div>
   </section>
+  <mat-grid-list cols="2" rowHeight="2:1">
+    <mat-grid-tile *ngFor="let image of images">
+      <img [src]="image.url" class="venue-image"/>
+    </mat-grid-tile>
+  </mat-grid-list>
   <app-venue-map [longitude]="venue.location.longitude" [latitude]="venue.location.latitude"></app-venue-map>
-  <div>
-    <img *ngFor="let image of images" [src]="image.url"/>
-  </div>
 </div>

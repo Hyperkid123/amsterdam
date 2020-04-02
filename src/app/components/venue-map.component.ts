@@ -51,7 +51,7 @@ export class VenueMapComponent implements OnInit {
     ]
     this.view = new View({
       center: this.lonLat,
-      zoom: 10
+      zoom: 15
     })
     this.map = new Map({
       target: document.getElementById('map'),
@@ -59,8 +59,6 @@ export class VenueMapComponent implements OnInit {
       view: this.view,
       controls: defaultControls().extend([
         new ZoomToExtent({
-          className: 'foo',
-          label: 'center',
           extent: [
             this.lonLat[0] - 150,
             this.lonLat[1] - 150,
@@ -75,6 +73,10 @@ export class VenueMapComponent implements OnInit {
   handleCenter() {
     const [ marker ] = this.vectorSource.getFeatures();
     const point = marker.getGeometry();
-    this.view.centerOn(point.getCoordinates(), [500, 500], [250, 250])
+    this.view.animate({
+      zoom: 18,
+      center: point.getCoordinates()
+    })
+    //this.view.centerOn(point.getCoordinates(), [500, 500], [250, 250])
   }
 }

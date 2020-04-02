@@ -11,6 +11,7 @@ import { MatIconModule } from '@angular/material/icon'
 import { MatInputModule } from '@angular/material/input'
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { LayoutModule } from '@angular/cdk/layout';
+import { MatGridListModule } from '@angular/material/grid-list';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -51,7 +52,8 @@ import { EstablishmentsMapComponent } from './components/establishments-map.comp
     FontAwesomeModule,
     MatButtonToggleModule,
     MatToolbarModule,
-    LayoutModule
+    LayoutModule,
+    MatGridListModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
