@@ -9,6 +9,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatSelectModule } from '@angular/material/select';
 import { MatIconModule } from '@angular/material/icon'
 import { MatInputModule } from '@angular/material/input'
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { LayoutModule } from '@angular/cdk/layout';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -47,7 +49,9 @@ import { EstablishmentsMapComponent } from './components/establishments-map.comp
     MatIconModule,
     MatInputModule,
     FontAwesomeModule,
-    MatButtonToggleModule
+    MatButtonToggleModule,
+    MatToolbarModule,
+    LayoutModule
   ],
   providers: [],
   bootstrap: [AppComponent]

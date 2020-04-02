@@ -1,21 +1,20 @@
 <div class="mat-elevation-z8 interactive-table">
   <div class="table-controls">
-    <app-table-filter (filterChange)="filterChange($event)" [filters]="filters"></app-table-filter>
-    <mat-paginator class="table-pagination" (page)="pageEvent = handlePagination($event)" [length]="length"
-      [pageIndex]="pageIndex" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions"
-      [showFirstLastButtons]="showFirstLastButtons">
-    </mat-paginator>
-  </div>
   <div class="view-switcher">
-    <mat-button-toggle-group #mode="matButtonToggleGroup" value="table">
-      <mat-button-toggle (click)="handleModeSwap('table')" value="table">
+    <mat-button-toggle-group #mode="matButtonToggleGroup" value="table" class="map-switcher">
+      <mat-button-toggle (click)="handleModeSwap('table')" value="table" class="table-toggle">
         <mat-icon>table_chart</mat-icon>
       </mat-button-toggle>
       <mat-button-toggle (click)="handleModeSwap('map')" value="map">
         <mat-icon>map</mat-icon>
       </mat-button-toggle>
     </mat-button-toggle-group>
-    <div class="example-selected-value">Selected value: {{mode.value}}</div>
+  </div>
+    <app-table-filter (filterChange)="filterChange($event)" [filters]="filters"></app-table-filter>
+    <mat-paginator class="table-pagination" (page)="pageEvent = handlePagination($event)" [length]="length"
+      [pageIndex]="pageIndex" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions"
+      [showFirstLastButtons]="showFirstLastButtons">
+    </mat-paginator>
   </div>
   <table *ngIf="mode.value === 'table'" mat-table [dataSource]="dataSource" class="mat-sort">
     <ng-container *ngFor="let column of columns" [matColumnDef]="column.path">

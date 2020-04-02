@@ -1,0 +1,9 @@
+.app-wrapper {
+  background-color: #eeeeee;
+  display: block;
+  min-height: 100vh;
+  >.content {
+    margin: 24px;
+    min-height: calc(100% - 64px);
+  }
+}

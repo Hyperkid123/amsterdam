@@ -1,4 +1,7 @@
+@import "../../variables";
+
 .interactive-table {
+  background-color: #ffffff;
   table {
     width: 100%;
     .table-header {
@@ -49,13 +52,29 @@
   }
   .table-controls {
     display: flex;
-    padding: 8px 24px;
+    padding: 8px 24px 8px 12px;
     flex-wrap: wrap;
     > *:not(:last-child) {
       margin-right: 16px;
     }
     .table-pagination {
       flex-grow: 1;
+    }
+  }
+  .view-switcher {
+    display: flex;
+    .map-switcher {
+      border: none;
+      .mat-button-toggle.mat-button-toggle-appearance-standard {
+        border: none;
+        border-radius: 50%;
+        height: 48px;
+        overflow: hidden;
+      }
+      .mat-button-toggle-checked {
+        color: map_get($amsterdam-primary, 500);
+        background: transparent;
+      }
     }
   }
 }

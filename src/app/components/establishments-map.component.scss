@@ -1,5 +1,25 @@
+@import "../../variables";
+
 .venue-popup {
-  display: block;
+  display: none;
   width: 250px;
   background-color: white;
+  padding: 8px;
+  border-radius: 4px;
+  box-shadow: $box-shadow;
+  .popup-title {
+    font-size: 1.5rem !important;
+  }
+  .popup-link {
+    font-size: 1rem;
+    text-decoration: none;
+    color:  map_get($amsterdam-primary, 700);
+    margin-bottom: 0;
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+  &.active {
+    display: block;
+  }
 }

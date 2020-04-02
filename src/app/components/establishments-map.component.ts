@@ -27,15 +27,19 @@ export class EstablishmentsMapComponent implements OnInit, OnChanges {
   lonLat: any;
   popup: any;
   popupLink: any;
+  selectedFeature: any;
 
   renderMarkers() {
     this.vectorSource.clear();
-    const markers = this.locations.map(({location, title, link, shortdescription}) => {
+    const markers = this.locations.map(({location, title, link, shortdescription, ...rest}) => {
       const marker = new Feature({
         geometry: new Point(fromLonLat([Number(location.longitude.replace(',', '.')), Number(location.latitude.replace(',', '.'))])),
         title,
         link,
         shortdescription,
+        city: rest['location.city'],
+        zipcode: rest['location.zipcode'],
+        adress: rest['location.adress']
       })
       marker.setStyle(new Style({
         image: new Icon({
@@ -51,7 +55,8 @@ export class EstablishmentsMapComponent implements OnInit, OnChanges {
 
   ngOnChanges() {
     if (this.vectorSource) {
-      this.renderMarkers()
+      this.renderMarkers();
+      this.selectedFeature = undefined;
     }
   }
   ngOnInit() {
@@ -83,7 +88,7 @@ export class EstablishmentsMapComponent implements OnInit, OnChanges {
       element: this.popup,
       positioning: 'bottom-center',
       stopEvent: false,
-      offset: [-25, -25]
+      offset: [0, -25]
     });
     this.map.addOverlay(popup);
     this.map.on('pointermove', (event) => {
@@ -97,27 +102,51 @@ export class EstablishmentsMapComponent implements OnInit, OnChanges {
     });
     this.map.on('click', (event) => {
       const feature = this.map.forEachFeatureAtPixel(event.pixel, (feature) => feature);
+      if (this.selectedFeature){
+        this.selectedFeature.setStyle(new Style({
+          image: new Icon({
+            src: 'assets/blue-map-marker.svg',
+            scale: 0.1
+          })
+        }));
+      }
       if (feature) {
         const coordinates = feature.getGeometry().getCoordinates();
         popup.setPosition(coordinates);
         this.popupLink = feature.get('link');
         const detailLink = document.getElementById('popup-link');
-        detailLink.innerHTML = feature.get('title');
+        const detailTitle = document.getElementById('popup-title')
+        detailLink.innerHTML = 'Learn more';
         this.popup.innerHTML = '';
         const popupTemplate = `<div class="map-popup">
         <section class="mat-typography">
+          <small>
+            ${feature.get('adress')} ${feature.get('zipcode')} ${feature.get('city')}
+          </small>
           <p>${feature.get('shortdescription')}</p>
         </section>
         </div>`
-        const popupTitle = document.createElement('h3');
-        popupTitle.appendChild(detailLink)
+        detailTitle.innerHTML = feature.get('title');
         const popupContent = document.createElement('p');
         popupContent.innerHTML = popupTemplate.trim();
-        this.popup.appendChild(popupTitle);
+        detailTitle.classList.add("popup-title")
+        this.popup.appendChild(detailTitle);
         this.popup.appendChild(popupContent);
-        this.popup.hidden = false
+        this.popup.appendChild(detailLink);
+        feature.setStyle(new Style({
+          image: new Icon({
+            src: 'assets/red-map-marker.svg',
+            scale: 0.1
+          })
+        }));
+        this.selectedFeature = feature;
+
+        this.view.animate({
+          zoom: 12,
+          center: coordinates
+        }) 
       } else {
-        this.popup.hidden = true
+        this.selectedFeature = undefined;
       }
     });
     this.renderMarkers()
