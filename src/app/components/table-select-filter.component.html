@@ -1,6 +1,6 @@
 <mat-form-field>
   <mat-label>{{filter.label}}</mat-label>
-  <mat-select [formControl]="filterControl" selected="filter.filterValue" multiple>
-    <mat-option *ngFor="let option of options" [value]="option.value">{{option.label}}</mat-option>
+  <mat-select [formControl]="filterControl" selected="filter.filterValue" multiple [id]="filter.key">
+    <mat-option [id]="filter.key + '-' + option.value" *ngFor="let option of options" [value]="option.value">{{option.label}}</mat-option>
   </mat-select>
 </mat-form-field>

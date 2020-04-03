@@ -1,4 +1,4 @@
-import { getVenues, SortOrder } from "./api";
+import { getVenues, SortOrder, getVenue } from "./api";
 import establishments from '../../data/establishment-data.json';
 
 describe('Api', () => {
@@ -28,7 +28,7 @@ describe('Api', () => {
         }]
       });
       expect(result.data.length).toEqual(1);
-      expect(result[0].trcid).toEqual('e327a6b0-a536-4e8a-b66f-6f76170dd923')
+      expect(result.data[0].trcid).toEqual('e327a6b0-a536-4e8a-b66f-6f76170dd923')
     })
 
     it('should return empty array on filter', async () => {
@@ -57,7 +57,7 @@ describe('Api', () => {
       const result = await getVenues({ limit: 10, sort: { path: 'title' } });
       result.data.forEach(({ title }, index) => {
         if (index > 0) {
-          expect(title.localeCompare(result[index - 1].title)).toEqual(1)
+          expect(title.localeCompare(result.data[index - 1].title)).toEqual(1)
         }
       })
     });
@@ -66,9 +66,27 @@ describe('Api', () => {
       const result = await getVenues({ limit: 10, sort: { path: 'title', order: SortOrder.desc } });
       result.data.forEach(({ title }, index) => {
         if (index > 0) {
-          expect(title.localeCompare(result[index - 1].title)).toEqual(-1)
+          expect(title.localeCompare(result.data[index - 1].title)).toEqual(-1)
         }
       })
     });
+  });
+
+  describe('getVenue', () => {
+    it('should return a venue', async () => {
+      const venue = await getVenue('e327a6b0-a536-4e8a-b66f-6f76170dd923')
+      expect(venue).toBeTruthy()
+    });
+
+    it('should throw 404', (done) => {
+      const promise = getVenue('nonsense')
+      promise.then(() => {
+        throw new Error('Get venue should not be resolved with wrong id argument')
+      }).catch(({ status, message }) => {
+        expect(status).toEqual(404)
+        expect(message).toEqual('Venue with id nonsense was not found')
+        done()
+      })
+    });    
   });
 });
